@@ -299,24 +299,25 @@ sendMessage({
     console.trace(reason);
 });
 
-chrome.storage.local.get('filteringModeDetails', result => {
-    if (!('filteringModeDetails' in result)) {
-        return
+{
+const result = await browser.storage.local.get('filteringModeDetails')
+if (!('filteringModeDetails' in result)) {
+    console.log("BAD")
+}
+
+let outputString = ''
+const allFilters = result.filteringModeDetails
+for (const filter in allFilters) {
+    const filteringOverrides = allFilters[filter].filter(elem => elem != 'all-urls')
+
+    if (filter === 'none' || filteringOverrides.length === 0) {
+        continue
     }
 
-    let outputString = ''
-    const allFilters = result.filteringModeDetails
-    for (const filter in allFilters) {
-        const filteringOverrides = allFilters[filter].filter(elem => elem != 'all-urls')
+    outputString = `<details><summary>${filter}</summary><strong>${filteringOverrides.join('<br>')}</strong></details><br>`
+}
 
-        if (filter === 'none' || filteringOverrides.length === 0) {
-            continue
-        }
-
-        outputString = `<details><summary>${filter}</summary><strong>${filteringOverrides.join('<br>')}</strong></details><br>`
-    }
-
-    document.querySelector('#filteringOverrides').innerHTML = outputString
-})
+document.querySelector('#filteringOverrides').innerHTML = outputString
+}
 
 /******************************************************************************/
