@@ -301,9 +301,6 @@ sendMessage({
 
 {
 const result = await browser.storage.local.get('filteringModeDetails')
-if (!('filteringModeDetails' in result)) {
-    console.log("BAD")
-}
 
 let outputString = ''
 const allFilters = result.filteringModeDetails
