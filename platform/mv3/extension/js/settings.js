@@ -311,10 +311,9 @@ for (const filter in allFilters) {
         continue
     }
 
-    outputString = `<details><summary>${filter}</summary><strong>${filteringOverrides.join('<br>')}</strong></details><br>`
+    outputString += `<details><summary>${filter}</summary><strong>${filteringOverrides.join('<br>')}</strong></details><br>`
 }
 
 document.querySelector('#filteringOverrides').innerHTML = outputString
 }
-
 /******************************************************************************/
