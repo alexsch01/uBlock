@@ -299,4 +299,21 @@ sendMessage({
     console.trace(reason);
 });
 
+{
+const result = await browser.storage.local.get('filteringModeDetails')
+
+let outputString = ''
+const allFilters = result.filteringModeDetails
+for (const filter in allFilters) {
+    const filteringOverrides = allFilters[filter].filter(elem => elem != 'all-urls')
+
+    if (filter === 'none' || filteringOverrides.length === 0) {
+        continue
+    }
+
+    outputString += `<details><summary>${filter}</summary><strong>${filteringOverrides.join('<br>')}</strong></details><br>`
+}
+
+document.querySelector('#filteringOverrides').innerHTML = outputString
+}
 /******************************************************************************/
